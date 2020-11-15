@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<?php
+$host    = "localhost";
+$user    = "root";
+$pass    = "mysoul2000";
+$db_name = "sports_management";
+
+//create connection
+$connection = mysqli_connect($host, $user, $pass, $db_name);
+
+//test if connection failed
+if(mysqli_connect_errno()){
+    die("connection failed: "
+        . mysqli_connect_error()
+        . " (" . mysqli_connect_errno()
+        . ")");
+}
+
+//get results from database
+$result = mysqli_query($connection,"SELECT * FROM medical where ");
+$all_property = array();  //declare an array for saving property
+
+//showing property
+echo '<table class="data-table">
+        <tr class="data-heading">';  //initialize table tag
+while ($property = mysqli_fetch_field($result)) {
+    echo '<td>' . $property->name . '</td>';  //get field name for header
+    array_push($all_property, $property->name);  //save those to array
+}
+echo '</tr>'; //end tr tag
+
+//showing all data
+while ($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    foreach ($all_property as $item) {
+        echo '<td>' . $row[$item] . '</td>'; //get items using property value
+    }
+    echo '</tr>';
+}
+echo "</table>";
+?>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>
